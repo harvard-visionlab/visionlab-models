@@ -12,3 +12,19 @@ Models are organized into "families" that might be interesting for research ques
     torch.hub.list("harvard-visionlab/visionlab_models")
     
 ```
+
+# list models within a family
+```
+    import torch
+    
+    torch.hub.list("harvard-visionlab/visionlab_models")
+    
+```
+
+# list model families
+```
+    import torch
+    
+    torch.hub.list("harvard-visionlab/visionlab_models")
+    
+```

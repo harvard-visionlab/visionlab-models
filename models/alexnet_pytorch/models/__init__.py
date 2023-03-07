@@ -58,7 +58,3 @@ def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79"
         url = urls[task][dataset][rep]
         model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
     return 
-
-def list_models(model_source=None, pattern=''):
-    print(model_source, pattern)
-    return ['alexnet_pytorch']
