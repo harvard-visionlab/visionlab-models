@@ -3,9 +3,9 @@ import torch
 import torchvision
 
 import models as _models
-import models.visualizations 
+import models.visualizations as _visualizations
 
-from models.registry import *
+# from models.registry import *
 
 dependencies = ['torch', 'torchvision']
 
@@ -74,3 +74,6 @@ def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=T
 
 def visionlab_models():
     return _models
+
+def visualizations():
+    return _visualizations
