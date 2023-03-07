@@ -4,13 +4,33 @@ import torchvision
 
 import models as vsl_models
 
-dependencies = ['torch', 'torchvision']
+from ...registry import register_model
 
 default_model_dir = os.path.join(torch.hub.get_dir(), "checkpoints")
 
 cache_filenames = {
   'alexnet_pytorch-category_supervised-imagenet1k-7be5be79': 'alexnet-owt-7be5be79.pth',
 }
+
+model_urls = {
+    'alexnet_pytorch-category_supervised-imagenet1k-7be5be79':
+        'https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/tf_efficientnet_l2_ns_475-bebbd00a.pth',
+}
+
+default_meta = dict(    
+    num_classes = 1000,
+    input_size=(3,224,224),   
+    crop_pct=0.875,
+    resize=(256,256),
+    input_range=[0, 1],
+    mean=_IMAGENET_MEAN,
+    std=_IMAGENET_STD,
+    repo="https://github.com/pytorch/vision",
+    task="supervised1k",
+    dataset='imagenet-1k',
+    datasize="1.3M",
+    bib=json.dumps('''""''')
+)
 
 def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=True):   
     cache_filename = cache_filenames[model_name]
@@ -43,14 +63,9 @@ def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=T
 
     return model 
   
+@register_model("alexnet_pytorch", arch="alexnet_pytorch", task="supervised1k", hashid="7be5be79", weights_url=model_urls["alexnet_pytorch-supervised1k-imagenet1k-7be5be79"], 
+description="Alexnet(PyTorch) Trained on ImageNet1k Classification", **default_meta)    
 def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79", model_dir=default_model_dir, verbose=True):
-    urls = {
-        "supervised1k": {
-            "imagenet1k": {
-                "7be5be79":  "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth"
-            }
-        }
-    }
 
     model = torchvision.models.alexnet(pretrained=False)
     if task is not None and dataset is not None:

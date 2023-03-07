@@ -4,7 +4,7 @@
 from collections import defaultdict
 from pdb import set_trace
 
-__all__ = ['list_sources', 'list_models', 'show_metadata']
+__all__ = ['list_families', 'list_models', 'show_metadata']
 
 _model_registry = defaultdict(dict)  # mapping of model names to entrypoint fns
 
@@ -31,8 +31,8 @@ def register_model(model_source, **kwargs):
         return wrapper
     return inner_decorator
 
-def list_sources():
-    """ Return list of available model names, sorted alphabetically
+def list_families():
+    """ Return list of available model families, sorted alphabetically
     """
     return list(_model_registry.keys())
 

@@ -2,7 +2,8 @@ import os
 import torch
 import torchvision
 
-import models as vsl_models
+import models as _models
+
 from models.registry import *
 
 dependencies = ['torch', 'torchvision']
@@ -12,6 +13,7 @@ default_model_dir = os.path.join(torch.hub.get_dir(), "checkpoints")
 cache_filenames = {
   'alexnet_pytorch-category_supervised-imagenet1k-7be5be79': 'alexnet-owt-7be5be79.pth',
 }
+
 
 def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=True):   
     cache_filename = cache_filenames[model_name]
@@ -60,6 +62,14 @@ def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=T
 #         model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
 #     return 
 
-def list_models(model_source=None, pattern=''):
-    print(model_source, pattern)
-    return ['alexnet_pytorch']
+# def list_models(model_source=None, pattern=''):
+#     print(model_source, pattern)
+#     return ['alexnet_pytorch']
+
+# def load_model(family, model_name, *args, **kwargs):
+#     model, transforms = vsl_models[family][model_name](*args, **kwargs)
+    
+#     return model, transforms
+
+def visionlab_models():
+    return _models
