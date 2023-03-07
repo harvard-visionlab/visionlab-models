@@ -3,8 +3,7 @@ import torch
 import torchvision
 
 import models as vsl_models
-
-from .models.registry import * 
+from models.registry import *
 
 dependencies = ['torch', 'torchvision']
 
