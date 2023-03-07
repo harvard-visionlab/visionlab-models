@@ -2,6 +2,8 @@ from PIL import Image
 from enum import Enum
 from typing import List, Tuple, Any, Optional
 from collections import OrderedDict
+from io import BytesIO
+import requests
 
 _IMAGENET_MEAN = [0.485, 0.456, 0.406]
 _IMAGENET_STD = [0.229, 0.224, 0.225]
@@ -22,6 +24,7 @@ class InterpolationMode(Enum):
     Available interpolation methods are ``nearest``, ``bilinear``, ``bicubic``, ``box``, ``hamming``, and ``lanczos``.
     """
     NEAREST = "nearest"
+    NEAREST_EXACT = "nearest-exact"
     BILINEAR = "bilinear"
     BICUBIC = "bicubic"
     # For PIL compatibility
@@ -44,7 +47,10 @@ class OpenImage(object):
     def __call__(self, img):
         if isinstance(img, Image.Image):
             return img
+        elif isinstance(img, str) and img.startswith('http'):
+            return Image.open(BytesIO(requests.get(img).content)).convert('RGB')
         elif isinstance(img, str):
             return Image.open(img).convert('RGB')
     def __repr__(self):
         return f'{self.__class__.__name__}()' 
+    

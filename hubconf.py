@@ -3,6 +3,7 @@ import torch
 import torchvision
 
 import models as _models
+import models.visualizations 
 
 from models.registry import *
 

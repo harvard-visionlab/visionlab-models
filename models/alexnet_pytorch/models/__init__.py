@@ -1,20 +1,22 @@
 import os
 import torch
 import torchvision
+import json
 
-import models as vsl_models
+from torchvision.transforms import InterpolationMode
 
+from ...common import _IMAGENET_MEAN, _IMAGENET_STD
 from ...registry import register_model
 
 default_model_dir = os.path.join(torch.hub.get_dir(), "checkpoints")
 
 cache_filenames = {
-  'alexnet_pytorch-category_supervised-imagenet1k-7be5be79': 'alexnet-owt-7be5be79.pth',
+  'alexnet_pytorch-supervised1k-imagenet1k-7be5be79': 'alexnet-owt-7be5be79.pth',
 }
 
 model_urls = {
-    'alexnet_pytorch-category_supervised-imagenet1k-7be5be79':
-        'https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/tf_efficientnet_l2_ns_475-bebbd00a.pth',
+    'alexnet_pytorch-supervised1k-imagenet1k-7be5be79':
+        'https://download.pytorch.org/models/alexnet-owt-7be5be79.pth',
 }
 
 default_meta = dict(    
@@ -25,11 +27,12 @@ default_meta = dict(
     input_range=[0, 1],
     mean=_IMAGENET_MEAN,
     std=_IMAGENET_STD,
+    interpolation=InterpolationMode.BILINEAR,
     repo="https://github.com/pytorch/vision",
     task="supervised1k",
     dataset='imagenet-1k',
     datasize="1.3M",
-    bib=json.dumps('''""''')
+    bib=json.dumps('''""'''),
 )
 
 def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=True):   
@@ -63,13 +66,13 @@ def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=T
 
     return model 
   
-@register_model("alexnet_pytorch", arch="alexnet_pytorch", task="supervised1k", hashid="7be5be79", weights_url=model_urls["alexnet_pytorch-supervised1k-imagenet1k-7be5be79"], 
+@register_model("alexnet_pytorch", arch="alexnet_pytorch", hashid="7be5be79", weights_url=model_urls["alexnet_pytorch-supervised1k-imagenet1k-7be5be79"], 
 description="Alexnet(PyTorch) Trained on ImageNet1k Classification", **default_meta)    
-def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79", model_dir=default_model_dir, verbose=True):
+def alexnet_7be5be79(task="supervised1k", dataset="imagenet1k", hashid="7be5be79", model_dir=default_model_dir, verbose=True):
 
     model = torchvision.models.alexnet(pretrained=False)
     if task is not None and dataset is not None:
-        model_name = f"alexnet_pytorch-{task}-{dataset}-{rep}"
-        url = urls[task][dataset][rep]
+        model_name = f"alexnet_pytorch-{task}-{dataset}-{hashid}"
+        url = model_urls[model_name]
         model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
-    return 
+    return model
