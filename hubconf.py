@@ -4,6 +4,8 @@ import torchvision
 
 import models as vsl_models
 
+from .models.registry import * 
+
 dependencies = ['torch', 'torchvision']
 
 default_model_dir = os.path.join(torch.hub.get_dir(), "checkpoints")
@@ -43,21 +45,21 @@ def _load_weights(model, model_name, url, model_dir=default_model_dir, verbose=T
 
     return model 
   
-def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79", model_dir=default_model_dir, verbose=True):
-    urls = {
-        "supervised1k": {
-            "imagenet1k": {
-                "7be5be79":  "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth"
-            }
-        }
-    }
+# def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79", model_dir=default_model_dir, verbose=True):
+#     urls = {
+#         "supervised1k": {
+#             "imagenet1k": {
+#                 "7be5be79":  "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth"
+#             }
+#         }
+#     }
 
-    model = torchvision.models.alexnet(pretrained=False)
-    if task is not None and dataset is not None:
-        model_name = f"alexnet_pytorch-{task}-{dataset}-{rep}"
-        url = urls[task][dataset][rep]
-        model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
-    return 
+#     model = torchvision.models.alexnet(pretrained=False)
+#     if task is not None and dataset is not None:
+#         model_name = f"alexnet_pytorch-{task}-{dataset}-{rep}"
+#         url = urls[task][dataset][rep]
+#         model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
+#     return 
 
 def list_models(model_source=None, pattern=''):
     print(model_source, pattern)
