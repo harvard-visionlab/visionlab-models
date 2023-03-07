@@ -54,7 +54,7 @@ def alexnet_pytorch(task="supervised1k", dataset="imagenet1k", hashid="7be5be79"
 
     model = torchvision.models.alexnet(pretrained=False)
     if task is not None and dataset is not None:
-    model_name = f"alexnet_pytorch-{task}-{dataset}-{rep}"
-    url = urls[task][dataset][rep]
-    model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
+        model_name = f"alexnet_pytorch-{task}-{dataset}-{rep}"
+        url = urls[task][dataset][rep]
+        model = _load_weights(model, model_name, url, model_dir=model_dir, verbose=verbose)
     return 
