@@ -22,14 +22,46 @@ Any models that are ported (copied + instrumented) from official sources are uno
 ```
     import torch
     
-    torch.hub.load("harvard-visionlab/visionlab_models", "list_families")
+    models = torch.hub.load("harvard-visionlab/visionlab_models", 'visionlab_models', trust_repo=True, force_reload=True)
+    models.list_families()
     
 ```
 
-# list model families
+# list models within a family
 ```
-    import torch
-    
-    torch.hub.list("harvard-visionlab/visionlab_models")
-    
+    models.list_models('alexnet_pytorch')
 ```
+
+# list metadata about a specific model
+```
+    models.show_metadata('alexnet_pytorch', 'alexnet_7be5be79')
+```
+
+# load a model
+```
+    model, transforms = models.load_model('alexnet_pytorch', 'alexnet_7be5be79')
+```
+
+# preprocess an image with test_transforms
+```
+transform = transforms['test_transforms']
+inv_transform = transforms['to_pil']
+url = 'https://www.dropbox.com/s/n8nr36vox86t25u/example.png?dl=1'
+img = transform(url)
+inv_transform(img) # visualize as PIL Image
+```
+
+# get model outputs (standards)
+```
+model.eval()
+with torch.no_grad():
+    out = model(img.unsqueeze(0))
+out.shape   
+```
+
+# models to add
+- [ ] debiased
+- [ ] edgenets
+- [ ] ijepa models
+- [ ] iwm models
+- [ ] ...
