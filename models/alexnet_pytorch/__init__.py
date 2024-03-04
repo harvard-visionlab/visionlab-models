@@ -62,8 +62,9 @@ def load_model(model_name, *args, **kwargs):
     model.get_features = partial(forward_features, model)
     model.layer_type = partial(get_layer_type, model)
     model.layer_names = [ln for ln in get_layer_names(model) if 'aux' not in ln]
-    model.layer_types = [get_layer_type(model, ln) for ln in model.layer_names]
-
+    model.layer_types = [get_layer_type(model, ln) for ln in model.layer_names]    
+    model.relu_layers = [ln for ln,lt in zip(model.layer_names,model.layer_types) if lt=='ReLU']
+    
     # get the names of the main blocks (useful for less fine-grained layerwise analysis)
     exclude = []
     selected_layers = [ln for ln,lt in zip(model.layer_names,model.layer_types)
