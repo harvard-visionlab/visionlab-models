@@ -1,6 +1,7 @@
 from pdb import set_trace
 from .registry import list_families, list_models, show_metadata
 from . import alexnet_pytorch
+from . import stylized_imagenet
 
 # from . import bagnets
 # from . import barlowtwins
@@ -96,6 +97,9 @@ def load_model(source, model_name, **kwargs):
     if source == "sparsenets":
         from . import sparsenets
         return sparsenets.load_model(model_name, **kwargs)
+    
+    if source == "stylized_imagenet":
+        return stylized_imagenet.load_model(model_name, **kwargs)
     
     if source == "swsl":
         return swsl.load_model(model_name, **kwargs)
