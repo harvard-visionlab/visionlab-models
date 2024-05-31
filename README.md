@@ -1,4 +1,4 @@
-# visionlab_models
+# visionlab-models
 
 (IN DEVELOPMENT!)
 
